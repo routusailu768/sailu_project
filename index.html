@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wind Energy Prediction</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f3d4a0; font-family: Arial, sans-serif; }
+        .header { background-color: #705444; color: white; text-align: center; padding: 20px; }
+        .container { display: flex; justify-content: space-around; padding: 50px; }
+        .section { width: 40%; }
+        input[type="text"], input[type="number"] { 
+            width: 100%; padding: 8px; margin: 10px 0; 
+            background-color: #fff9c4; border: 1px solid #ccc; box-sizing: border-box;
+        }
+        button { background-color: #5d4037; color: white; border: none; padding: 10px 20px; cursor: pointer; font-size: 12px; }
+        .weather-results { margin-top: 20px; line-height: 1.8; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Wind Turbine Energy Prediction Based on Weather Conditions</h1>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <p>Give your city name to know the weather conditions...</p>
+            <form action="/weather" method="post">
+                <input type="text" name="city" placeholder="Type city name (e.g., London, Tokyo)" required>
+                <br>
+                <button type="submit">CHECK THE WEATHER CONDITIONS</button>
+            </form>
+
+            {% if weather %}
+            <div class="weather-results">
+                <h3>The weather conditions of {{ weather.city }} are</h3>
+                <p>Temperature: {{ weather.temp }} °C</p>
+                <p>Humidity: {{ weather.hum }} %</p>
+                <p>Pressure: {{ weather.pres }} mmHG</p>
+                <p>Wind Speed: {{ weather.speed }} m/s</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h3>Predict the Wind Energy!!</h3>
+            <form action="/predict" method="post">
+                <input type="number" step="any" name="theo" placeholder="Theoretical Power in KWh" required>
+                <input type="number" step="any" name="speed" placeholder="Wind Speed in m/s" required>
+                <br>
+                <button type="submit">PREDICT</button>
+            </form>
+
+            {% if prediction %}
+            <div class="weather-results">
+                <p>The energy predicted is {{ prediction }} KWh</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
